@@ -27,7 +27,7 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
+![](./screen.jpg)
 
 ### Links
 
@@ -39,7 +39,6 @@ Users should be able to:
 ### Built with
 
 - Semantic HTML5 markup
-- CSS custom properties
 - JavaScript - Scripting language
 - [Node.js](https://nodejs.org/)
 
@@ -146,11 +145,6 @@ Learned how to setup a static server
 ### Continued development
 
 I am going to turn this into a React App next.
-
-### Useful resources
-
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
 
 ## Author
 
