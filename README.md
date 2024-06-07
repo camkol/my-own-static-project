@@ -90,8 +90,9 @@ mkdir public
 2. **Create an HTML File**:
    Place an `index.html` file in the `public` directory with some sample content:
 
+`index.html`
+
 ```html
-<!-- public/index.html -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -106,14 +107,17 @@ mkdir public
 3. **Create the Server File**:
    Create a file named `server.js` in the root of your project directory:
 
-```javascript
+`server.js`
 
-// server.js
-const express = require('express');
-const path = require('path');
+```javascript
+// Importing the 'express' module
+const express = require("express");
+
+// Importing the 'path' module
+const path = require("path");
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 // Serve static files from the "public" directory
 app.use(express.static(path.join(\_\_dirname, 'public')));
@@ -172,47 +176,79 @@ Your project so far should look like this:
 `app.js`
 
 ```js
+// Select the form with the ID "itemForm" and store it in the itemForm variable
 const itemForm = document.querySelector("#itemForm");
+
+// Select the unordered list with the ID "list" and store it in the listContainer variable
 const listContainer = document.querySelector("#list");
 
+// Add an event listener to the itemForm that listens for the "submit" event
 itemForm.addEventListener("submit", function (e) {
+  // Prevent the default form submission behavior
   e.preventDefault();
+
+  // Select the input elements for name and price from the form
   const itemInput = itemForm.elements.name;
   const priceInput = itemForm.elements.price;
+
+  // Call the addItem function with the values from the input elements
   addItem(itemInput.value, priceInput.value);
+
+  // Clear the input fields after adding the item
   itemInput.value = "";
   priceInput.value = "";
 });
 
+// Function to add an item to the list
+// Parameters: username (name of the item), tweet (price of the item)
 const addItem = (username, tweet) => {
+  // Create a new list item element
   const newItem = document.createElement("li");
+
+  // Create a new bold element
   const bTag = document.createElement("b");
+
+  // Append the username text to the bold element
   bTag.append(username);
+
+  // Append the bold element to the new list item
   newItem.append(bTag);
-  newItem.append(`- ${tweet}`);
+
+  // Append the price text to the new list item, preceded by a dash
+  newItem.append(` - ${tweet}`);
+
+  // Append the new list item to the list container
   listContainer.append(newItem);
 };
 
+// Add an event listener to the list container that listens for click events
 listContainer.addEventListener("click", function (e) {
-  e.target.nodeName === "LI" && e.target.remove();
+  // If the clicked element is a list item, remove it from the list
+  if (e.target.nodeName === "LI") {
+    e.target.remove();
+  }
 });
 ```
 
 `server.js`
 
 ```js
+// Importing the 'express' module
 const express = require("express");
+
+// Importing the 'path' module
 const path = require("path");
 
 const app = express();
 const port = 3001;
 
-// Serve the static files from the the 'public' directory
-app.use(express.static(path.join(__dirname, "public")));
+// Serve static files from the "public" directory
+app.use(express.static(path.join(\_\_dirname, 'public')));
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+console.log(`Server is running on http://localhost:${port}`);
+});sole.log(`Server is running on http://localhost:${port}`);
 });
 ```
 
@@ -231,11 +267,18 @@ my-node-project/
 
 #### 1. Update `server.js` to Handle API Requests
 
-Modify `server.js `to handle GET and POST requests:
+Modify `server.js` to handle GET and POST requests:
+
+`server.js`
 
 ```javascript
+// Importing the 'express' module
 const express = require("express");
+
+// Importing the 'path' module
 const path = require("path");
+
+// Importing the 'body-parser' module
 const bodyParser = require("body-parser");
 
 const app = express();
@@ -271,30 +314,52 @@ console.log(`Server is running on http://localhost:${port}`);
 
 Update your `app.js` to fetch the list of items from the server and add new items via the API:
 
+`app.js`
+
 ```javascript
+// When the DOM content is fully loaded, fetch the existing items from the server
 document.addEventListener("DOMContentLoaded", () => {
   fetchItems();
 });
 
+// Select the form with the ID "itemForm" and store it in the itemForm variable
 const itemForm = document.querySelector("#itemForm");
+
+// Select the unordered list with the ID "list" and store it in the listContainer variable
 const listContainer = document.querySelector("#list");
 
+// Add an event listener to the itemForm that listens for the "submit" event
 itemForm.addEventListener("submit", function (e) {
+  // Prevent the default form submission behavior
   e.preventDefault();
+
+  // Select the input elements for name and price from the form
   const itemInput = itemForm.elements.name;
   const priceInput = itemForm.elements.price;
+
+  // Call the addItem function with the values from the input elements
   addItem(itemInput.value, priceInput.value);
+
+  // Clear the input fields after adding the item
   itemInput.value = "";
   priceInput.value = "";
 });
 
+// Function to fetch existing items from the server
 const fetchItems = async () => {
+  // Make a GET request to the /api/items endpoint
   const response = await fetch("/api/items");
+
+  // Parse the JSON response
   const items = await response.json();
+
+  // Iterate over the items and add each one to the DOM
   items.forEach((item) => addItemToDOM(item.name, item.price));
 };
 
+// Function to add an item to the server and update the DOM
 const addItem = async (name, price) => {
+  // Make a POST request to the /api/items endpoint with the new item data
   const response = await fetch("/api/items", {
     method: "POST",
     headers: {
@@ -303,22 +368,37 @@ const addItem = async (name, price) => {
     body: JSON.stringify({ name, price }),
   });
 
+  // If the request is successful, parse the JSON response and add the item to the DOM
   if (response.ok) {
     const newItem = await response.json();
     addItemToDOM(newItem.name, newItem.price);
   }
 };
 
+// Function to add an item to the DOM
 const addItemToDOM = (name, price) => {
+  // Create a new list item element
   const newItem = document.createElement("li");
+
+  // Create a new bold element
   const bTag = document.createElement("b");
+
+  // Append the name text to the bold element
   bTag.append(name);
+
+  // Append the bold element to the new list item
   newItem.append(bTag);
+
+  // Append the price text to the new list item, preceded by a dash
   newItem.append(` - ${price}`);
+
+  // Append the new list item to the list container
   listContainer.append(newItem);
 };
 
+// Add an event listener to the list container that listens for click events
 listContainer.addEventListener("click", function (e) {
+  // If the clicked element is a list item, remove it from the list
   if (e.target.nodeName === "LI") e.target.remove();
 });
 ```
